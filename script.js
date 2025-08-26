@@ -61,6 +61,7 @@ form.addEventListener("submit",e=>{
     let email=document.getElementById("emailCliente").value.trim();
     let telefone=document.getElementById("telefoneCliente").value.trim();
     let desc=document.getElementById("descCaneca").value.trim();
+    let imgFile=document.getElementById("imgCaneca").files[0];
     let entrega=tipoEntrega.value;
     let erro=false;
     document.getElementById("erroNome").textContent="";
@@ -69,7 +70,15 @@ form.addEventListener("submit",e=>{
     if(nome===""){document.getElementById("erroNome").textContent="Nome obrigatório";erro=true;}
     if(email===""||!email.includes("@")){document.getElementById("erroEmail").textContent="Email inválido";erro=true;}
     if(entrega==="retirada" && (telefone===""||telefone.length<4)){document.getElementById("erroTelefone").textContent="Telefone inválido";erro=true;}
+    
+    // Validação: descrição ou imagem obrigatória
+    if(desc==="" && !imgFile){
+        alert("Você deve fornecer uma descrição da caneca ou enviar uma imagem.");
+        erro = true;
+    }
+
     if(erro) return;
+
     let produtos=["Caneca"];
     document.querySelectorAll('input[name="bolo"]:checked').forEach(b=>{produtos.push(b.value);});
     let total=20+document.querySelectorAll('input[name="bolo"]:checked').length*20;
