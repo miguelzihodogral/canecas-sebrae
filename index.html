@@ -8,7 +8,7 @@
 </head>
 <body>
 <header>
-  <h1>Canecas Sebrae - Feira</h1>
+  <h1>☕ Canecas Sebrae - Feira</h1>
 </header>
 
 <main>
@@ -34,13 +34,16 @@
     <input type="file" id="imgCaneca" accept="image/*">
     <img id="previewImg" style="display:none; max-width:150px; margin-top:5px;">
   </label>
-  <fieldset>
+
+  <button type="button" id="toggleBolosBtn">Acompanhamentos</button>
+  <fieldset id="bolosFieldset" style="display:none;">
     <legend>Bolos opcionais (R$20 cada)</legend>
     <label><input type="checkbox" name="bolo" value="Bolo de Fubá"> Bolo de Fubá</label>
     <label><input type="checkbox" name="bolo" value="Bolo de Fubá Cremoso"> Bolo de Fubá Cremoso</label>
     <label><input type="checkbox" name="bolo" value="Bolo de Chocolate"> Bolo de Chocolate</label>
     <label><input type="checkbox" name="bolo" value="Bolo de Cenoura com Chocolate"> Bolo de Cenoura com Chocolate</label>
   </fieldset>
+
   <label>Entrega:
     <select id="tipoEntrega">
       <option value="retirada">Vou retirar na feira</option>
