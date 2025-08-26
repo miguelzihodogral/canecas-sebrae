@@ -1,85 +1,86 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canecas Sebrae - Teste</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canecas Sebrae - Feira</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Canecas Sebrae - Teste</h1>
-    <button id="loginButton">Login Vendedor</button>
-  </header>
+<header>
+  <h1>Canecas Sebrae - Feira</h1>
+  <div id="vendedorHeader" style="display:none;">
+    <span id="vendedorName"></span>
+    <button id="trocarSenhaBtn">Trocar senha</button>
+    <button id="logoutBtn">Sair</button>
+  </div>
+  <button id="loginBtn">Login Vendedor</button>
+</header>
+<main>
+<section id="clienteSection">
+<h2>Faça seu pedido</h2>
+<form id="pedidoForm">
+  <label>Nome completo:
+    <input type="text" id="nomeCliente" placeholder="Seu nome completo">
+    <span class="erro" id="erroNome"></span>
+  </label>
+  <label>Email:
+    <input type="email" id="emailCliente" placeholder="seu@email.com">
+    <span class="erro" id="erroEmail"></span>
+  </label>
+  <label>Telefone (para retirada):
+    <input type="text" id="telefoneCliente" placeholder="XX XXXXX-XXXX">
+    <span class="erro" id="erroTelefone"></span>
+  </label>
+  <label>Descrição da caneca:
+    <textarea id="descCaneca" placeholder="Ex: Quero uma caneca com meu nome e logo"></textarea>
+  </label>
+  <label>Imagem da caneca:
+    <input type="file" id="imgCaneca" accept="image/*">
+    <img id="previewImg" style="display:none; max-width:150px; margin-top:5px;">
+  </label>
+  <fieldset>
+    <legend>Bolos opcionais (R$20 cada)</legend>
+    <label><input type="checkbox" name="bolo" value="Bolo de Fubá"> Bolo de Fubá</label>
+    <label><input type="checkbox" name="bolo" value="Bolo de Fubá Cremoso"> Bolo de Fubá Cremoso</label>
+    <label><input type="checkbox" name="bolo" value="Bolo de Chocolate"> Bolo de Chocolate</label>
+    <label><input type="checkbox" name="bolo" value="Bolo de Cenoura com Chocolate"> Bolo de Cenoura com Chocolate</label>
+  </fieldset>
+  <label>Entrega:
+    <select id="tipoEntrega">
+      <option value="retirada">Vou retirar na feira</option>
+      <option value="entrega">Quero entrega</option>
+    </select>
+  </label>
+  <div id="totalDiv">Total: R$20</div>
+  <button type="submit">Finalizar Pedido</button>
+</form>
 
-  <main>
-    <section id="clienteSection">
-      <h2>Faça seu pedido</h2>
-      <form id="pedidoForm">
-        <label>Descrição da caneca (ou envie imagem obrigatória):
-          <textarea id="canecaDesc" placeholder="Ex: Quero uma caneca com meu nome (João) e a logo do Corinthians"></textarea>
-        </label>
-        <label>Imagem da caneca:
-          <input type="file" id="canecaImg" accept="image/*">
-          <img id="previewImg" src="" alt="Preview" style="display:none; max-width:200px; margin-top:10px;">
-        </label>
-        <fieldset>
-          <legend>Bolos opcionais (R$20 cada)</legend>
-          <label><input type="checkbox" name="bolo" value="Bolo de Fubá"> Bolo de Fubá</label>
-          <label><input type="checkbox" name="bolo" value="Bolo de Fubá Cremoso"> Bolo de Fubá Cremoso</label>
-          <label><input type="checkbox" name="bolo" value="Bolo de Chocolate"> Bolo de Chocolate</label>
-          <label><input type="checkbox" name="bolo" value="Bolo de Cenoura com Chocolate"> Bolo de Cenoura com Chocolate</label>
-        </fieldset>
-        <label>Entrega:
-          <select id="entrega">
-            <option value="Retirar na feira">Vou retirar na feira</option>
-            <option value="Entrega">Quero entrega</option>
-          </select>
-        </label>
-        <label>Endereço completo:
-          <input type="text" id="endereco" placeholder="Rua, número, AP se tiver">
-        </label>
-        <label>Email:
-          <input type="email" id="email" placeholder="seu@email.com">
-        </label>
-        <div id="totalDiv">Total: R$20</div>
-        <div id="justificativa">Preço inicial inclui Caneca (R$20). Bolos opcionais adicionam R$0 ao total.</div>
-        <button type="submit">Finalizar Pedido</button>
-      </form>
+<section id="ticket" style="display:none;">
+<h3>Pedido Finalizado</h3>
+<p>Código do pedido: <span id="codigoPedido"></span></p>
+<p>Nome: <span id="nomeFinal"></span></p>
+<p>Produtos: <span id="produtosFinal"></span></p>
+<p>Total: R$<span id="totalFinal"></span></p>
+<p>Email: <span id="emailFinal"></span></p>
+<p>Telefone: <span id="telefoneFinal"></span></p>
+<p>Descrição: <span id="descFinal"></span></p>
+<img id="imgFinal" style="max-width:150px; display:none; margin-top:5px;">
+</section>
+</section>
 
-      <section id="ticket" style="display:none;">
-        <h3>Pedido Finalizado</h3>
-        <p id="ticketCodigo"></p>
-        <p id="ticketTotal"></p>
-        <p id="ticketProdutos"></p>
-        <p id="ticketEndereco"></p>
-        <p id="ticketEmail"></p>
-        <p id="ticketDescricao"></p>
-        <div id="qrcode"></div>
-      </section>
-    </section>
+<section id="vendedorSection" style="display:none;">
+<h2>Painel do Vendedor</h2>
+<table id="pedidosTable" border="1">
+<thead>
+<tr><th>Nome</th><th>Email</th><th>Produtos</th><th>Total</th><th>Status</th><th>Ver/Resgatar</th></tr>
+</thead>
+<tbody></tbody>
+</table>
+</section>
 
-    <section id="vendedorSection" style="display:none;">
-      <h2>Painel do Vendedor</h2>
-      <p>Usuário logado: <span id="vendedorUser"></span></p>
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Cliente</th>
-            <th>Produtos</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Resgatar</th>
-          </tr>
-        </thead>
-        <tbody id="pedidosTable"></tbody>
-      </table>
-      <button id="logoutButton">Sair</button>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+</main>
+<script src="script.js"></script>
 </body>
 </html>
