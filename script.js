@@ -13,6 +13,18 @@ const telefoneFinal=document.getElementById("telefoneFinal");
 const descFinal=document.getElementById("descFinal");
 const imgFinal=document.getElementById("imgFinal");
 
+const toggleBolosBtn = document.getElementById("toggleBolosBtn");
+const bolosFieldset = document.getElementById("bolosFieldset");
+
+// Toggle bolos
+toggleBolosBtn.addEventListener("click",()=>{
+    if(bolosFieldset.style.display==="none"){
+        bolosFieldset.style.display="block";
+    }else{
+        bolosFieldset.style.display="none";
+    }
+});
+
 // Preview imagem
 imgCaneca.addEventListener("change",()=>{
     const f=imgCaneca.files[0];
