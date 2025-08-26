@@ -18,11 +18,7 @@ const bolosFieldset = document.getElementById("bolosFieldset");
 
 // Toggle bolos
 toggleBolosBtn.addEventListener("click",()=>{
-    if(bolosFieldset.style.display==="none"){
-        bolosFieldset.style.display="block";
-    }else{
-        bolosFieldset.style.display="none";
-    }
+    bolosFieldset.style.display = bolosFieldset.style.display==="none"?"block":"none";
 });
 
 // Preview imagem
@@ -37,7 +33,7 @@ imgCaneca.addEventListener("change",()=>{
 
 // Atualiza total
 function atualizarTotal(){
-    let total=20; // caneca
+    let total=20; // preço base da caneca
     let bolos=[];
     document.querySelectorAll('input[name="bolo"]:checked').forEach(b=>{
         total+=20;
