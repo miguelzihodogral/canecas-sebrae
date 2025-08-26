@@ -1,4 +1,3 @@
-let pedidos=[];
 const form=document.getElementById("pedidoForm");
 const tipoEntrega=document.getElementById("tipoEntrega");
 const totalDiv=document.getElementById("totalDiv");
@@ -13,11 +12,6 @@ const emailFinal=document.getElementById("emailFinal");
 const telefoneFinal=document.getElementById("telefoneFinal");
 const descFinal=document.getElementById("descFinal");
 const imgFinal=document.getElementById("imgFinal");
-const loginBtn=document.getElementById("loginBtn");
-const vendedorHeader=document.getElementById("vendedorHeader");
-const vendedorSection=document.getElementById("vendedorSection");
-const vendedorName=document.getElementById("vendedorName");
-const logoutBtn=document.getElementById("logoutBtn");
 
 // Preview imagem
 imgCaneca.addEventListener("change",()=>{
@@ -74,7 +68,6 @@ form.addEventListener("submit",e=>{
     if(entrega==="entrega") total+=10;
     let codigo=gerarCodigo(entrega,telefone);
     let imgSrc=previewImg.src;
-    pedidos.push({codigo,nome,email,telefone,produtos,total,desc,imgSrc,entrega,resgatado:false});
     codigoPedidoEl.textContent=codigo;
     nomeFinal.textContent=nome;
     produtosFinal.textContent=produtos.join(", ");
@@ -90,58 +83,3 @@ form.addEventListener("submit",e=>{
     atualizarTotal();
     alert("Pedido finalizado! Anote seu código: "+codigo);
 });
-
-// LOGIN VENDEDOR
-loginBtn.addEventListener("click",()=>{
-    const usuario=prompt("Usuário:");
-    const senha=prompt("Senha:");
-    if(usuario==="teste" && senha==="1234"){
-        vendedorHeader.style.display="flex";
-        vendedorSection.style.display="block";
-        vendedorName.textContent=usuario;
-        loginBtn.style.display="none";
-        atualizarPedidosVendedor();
-        alert("Login realizado!");
-    }else alert("Usuário ou senha incorretos!");
-});
-
-// LOGOUT
-logoutBtn.addEventListener("click",()=>{
-    vendedorHeader.style.display="none";
-    vendedorSection.style.display="none";
-    loginBtn.style.display="inline-block";
-});
-
-// Atualiza tabela do vendedor
-function atualizarPedidosVendedor(){
-    const tbody=document.querySelector("#pedidosTable tbody");
-    tbody.innerHTML="";
-    pedidos.forEach((p,i)=>{
-        let tr=document.createElement("tr");
-        tr.innerHTML=`<td>${p.nome}</td><td>${p.email}</td><td>${p.produtos.join(", ")}</td><td>R$${p.total}</td><td>${p.resgatado?"Entregue":"Pendente"}</td>
-        <td>
-        <button onclick="resgatarPedido(${i})">Ver/Resgatar</button>
-        ${p.resgatado?'<button class="lixeira" onclick="apagarPedido('+i+')"><i class="fa fa-trash"></i></button>':''}
-        </td>`;
-        tbody.appendChild(tr);
-    });
-}
-
-// Resgatar pedido
-window.resgatarPedido=function(i){
-    let p=pedidos[i];
-    let cod=prompt("Digite o código do pedido para resgatar:");
-    if(cod==p.codigo){
-        pedidos[i].resgatado=true;
-        alert("Pedido resgatado!");
-        atualizarPedidosVendedor();
-    }else alert("Código incorreto!");
-}
-
-// Apagar pedido
-window.apagarPedido=function(i){
-    if(confirm("Deseja apagar este pedido?")){
-        pedidos.splice(i,1);
-        atualizarPedidosVendedor();
-    }
-}
