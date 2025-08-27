@@ -37,3 +37,45 @@ form.addEventListener("submit", (e) => {
 function abrirAcompanhamentos() {
   alert("Aqui você pode escolher os acompanhamentos (em breve uma listinha estilizada).");
 }
+// server.js
+const express = require("express");
+const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
+const cors = require("cors");
+
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+
+// Config do transporte de email
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "codigoscanecas@gmail.com",
+    pass: "12345678910111213141516" // senha de app do Gmail
+  }
+});
+
+// Rota para enviar email
+app.post("/enviar-email", async (req, res) => {
+  const { emailCliente, codigoPedido } = req.body;
+
+  try {
+    await transporter.sendMail({
+      from: '"Canecas Personalizadas 🎁" <codigoscanecas@gmail.com>',
+      to: emailCliente,
+      subject: "Seu código de retirada / entrega",
+      text: `Obrigado pelo pedido! 🎉\n\nSeu código é: ${codigoPedido}\n\nGuarde bem esse código, ele será necessário para confirmar sua retirada ou entrega.`
+    });
+
+    res.status(200).json({ message: "Email enviado com sucesso!" });
+  } catch (error) {
+    console.error("Erro ao enviar email:", error);
+    res.status(500).json({ message: "Erro ao enviar email" });
+  }
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
